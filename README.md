@@ -1,5 +1,9 @@
 # Varvara Search
 
+<div style="text-align: center;">
+<img src="https://i.imgur.com/AZZZvWK.png" alt="varvara v2">
+</div>
+
 ## v2 (current)
 
 ## Список изменений:
