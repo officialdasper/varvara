@@ -13,6 +13,7 @@
 	// Очистка выходного буфера если это необходимо
 	while(ob_get_level() > 0) ob_end_clean();
 
+
 	// Разрешенные IP-адреса
 	$Allow_ip = [
 		'127.0.0.1',
@@ -399,14 +400,14 @@
 			Подождите, идет поиск...
 		</div>
 		<?php
-			if($step == "result") {
+			if($step == "result" && isset($_SESSION['echo'])) {
 				echo '<script>document.getElementById("loading").remove();</script>';
 				$count = count($_SESSION['echo']);
 				echo $count ? '<h2 class="text-center mb-5">Найдено в:</h2>' : '<div class="alert alert-danger" role="alert">Поиск ничего не дал.</div>';
 				if($count) {
 					foreach($_SESSION['echo'] as $echo) {
 						$url = defined('BX_FILEMAN_URL_ROOT') ? sprintf("<a href=\"%s/bitrix/admin/fileman_file_edit.php?path=%s&full_src=Y\" target=\"_blank\" class=\"title-found\">%s</a>", BX_FILEMAN_URL_ROOT, $echo['admin-path'], $echo['path']) : sprintf("<div class=\"title-found\">%s<div>", $echo['path']);
-						printf("<div class=\"col-md-12 founddiv bg-white border mb-3\"><div class=\"card-title mt-2\">%s</div>%s</div>", $url, $echo['result']);
+						printf("<div class=\"col-md-12 founddiv bg-white border mb-3\"><div class=\"card-title my-2\">%s</div>%s</div>", $url, $echo['result']);
 					}
 				}
 				unset($_SESSION['echo']);
@@ -512,6 +513,7 @@
 				}
 				if($where == "name") {
 					$number_file = 1;
+					$_SESSION['files'] = search_files($dir);
 					foreach($_SESSION['files'] as $path) {
 						if(trim($path) != '') {
 							$_SESSION['echo'][$number_file] = [
